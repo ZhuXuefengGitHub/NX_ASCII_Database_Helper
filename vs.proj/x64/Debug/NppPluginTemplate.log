@@ -1,0 +1,63 @@
+﻿  GoToLineDlg.cpp
+  StaticDialog.cpp
+  NppPluginDemo.cpp
+  PluginDefinition.cpp
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(263): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(268): warning C4456: declaration of 'sp' hides previous local declaration
+  C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(256): note: see declaration of 'sp'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(295): warning C4456: declaration of 'searchText' hides previous local declaration
+  C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(234): note: see declaration of 'searchText'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(381): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(416): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(420): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(454): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(458): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(459): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\PluginDefinition.cpp(454): warning C4189: 'totalLines': local variable is initialized but not referenced
+  ExplorerDialog.cpp
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(42): warning C4005: 'CREATEPROCESS_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(283): note: see previous definition of 'CREATEPROCESS_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(43): warning C4005: 'MINIMUM_RESERVED_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(288): note: see previous definition of 'MINIMUM_RESERVED_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(226): warning C4005: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(284): note: see previous definition of 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(315): warning C4005: 'ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(285): note: see previous definition of 'ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(349): warning C4005: 'ISOLATIONPOLICY_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(286): note: see previous definition of 'ISOLATIONPOLICY_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(399): warning C4005: 'ISOLATIONPOLICY_BROWSER_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(287): note: see previous definition of 'ISOLATIONPOLICY_BROWSER_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(546): warning C4005: 'MAXIMUM_RESERVED_MANIFEST_RESOURCE_ID': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(289): note: see previous definition of 'MAXIMUM_RESERVED_MANIFEST_RESOURCE_ID'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(610): warning C4005: 'RT_MANIFEST': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(282): note: see previous definition of 'RT_MANIFEST'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1519): warning C4005: 'IDI_APPLICATION': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11058): note: see previous definition of 'IDI_APPLICATION'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1522): warning C4005: 'IDI_HAND': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11059): note: see previous definition of 'IDI_HAND'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1525): warning C4005: 'IDI_QUESTION': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11060): note: see previous definition of 'IDI_QUESTION'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1528): warning C4005: 'IDI_EXCLAMATION': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11061): note: see previous definition of 'IDI_EXCLAMATION'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1531): warning C4005: 'IDI_ASTERISK': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11062): note: see previous definition of 'IDI_ASTERISK'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1533): warning C4005: 'IDI_WINLOGO': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11064): note: see previous definition of 'IDI_WINLOGO'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1535): warning C4005: 'IDI_SHIELD': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(11067): note: see previous definition of 'IDI_SHIELD'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1610): warning C4005: 'HTERROR': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(2565): note: see previous definition of 'HTERROR'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1611): warning C4005: 'PWR_FAIL': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(2074): note: see previous definition of 'PWR_FAIL'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\resource.h(1613): warning C4005: 'HTTRANSPARENT': macro redefinition
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(2566): note: see previous definition of 'HTTRANSPARENT'
+C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\src\ExplorerDialog.cpp(138): warning C4189: 'pNMHDR': local variable is initialized but not referenced
+  Generating Code...
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.rh(471): warning RC4005: 'PWR_FAIL' : redefinition
+  
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.rh(885): warning RC4005: 'HTERROR' : redefinition
+  
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.rh(886): warning RC4005: 'HTTRANSPARENT' : redefinition
+  
+     Creating library C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\vs.proj\x64\Debug\MyFormatFixerPlugin.lib and object C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\vs.proj\x64\Debug\MyFormatFixerPlugin.exp
+  NppPluginTemplate.vcxproj -> C:\Users\Z004ZAHS\Desktop\NX_ASCII_Database_Helper_all\vs.proj\x64\Debug\MyFormatFixerPlugin.dll
