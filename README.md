@@ -1,7 +1,7 @@
 # Welcome to Siemens NX CAM ASCII Database Helper Pluging for Notepad++
 
 ## Description:
-This is a Notepad++ plugin for Siemens NX CAM ASCII Database file, which help the user list all of type in database and format file. It includes two functionality in the menu list:
+This is a Notepad++ plugin for Siemens NX CAM ASCII Database file, which help the user list all of type in database and format file. It includes two functionalities in the menu list:
 
 1. Format Database: Align the data of each CLASS with its corresponding attribute in format line.
 
