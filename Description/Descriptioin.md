@@ -6,7 +6,6 @@
    ![Alt text](image-3.png)
 4. 打开notepad++并打开.dat文件
 5. 在`Plugins`下拉菜单中可以找到`NX ASCII Database Helper`，点击`Format Database` \ 'ShowClassInTree'
-   ![Alt text](image.png)
 6. 等待处理完成点击OK
    ![Alt text](image-1.png)
 7. 检查数据格式
