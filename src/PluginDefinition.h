@@ -33,6 +33,7 @@ using std::string;
 #include <vector>
 using namespace std;
 
+#define PROCESS_NONE -1  
 #define PROCESS_OK 0
 #define PROCESS_ERROR 1
 #define GET_SCI_ERROR 2

@@ -82,33 +82,6 @@ void ExplorerDialog::populateClassTree(std::vector<int> linePositions, std::vect
 		tvItem.hItem = hChild;
 		tvItem.lParam = linePositions[i];
 		TreeView_SetItem(hTreeCtrl, &tvItem);
-
-		/*
-		// Add button to the item
-		RECT rect;
-		TreeView_GetItemRect(hTreeCtrl, hChild, &rect, TRUE);
-
-		int btnWidth = 60;
-		int btnHeight = rect.bottom - rect.top;
-		int btnLeft = rect.right + 5;
-		int btnTop = rect.top;
-
-		HWND hButton = CreateWindow(
-			_T("BUTTON"), _T("Jump"),
-			WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-			btnLeft, btnTop, btnWidth, btnHeight,
-			_hSelf, (HMENU)(IDC_FIRST_BUTTON + i),
-			NULL, NULL);
-
-		// Set button tooltip
-		TOOLINFO toolInfo;
-		toolInfo.cbSize = sizeof(TOOLINFO);
-		toolInfo.hwnd = _hSelf;
-		toolInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
-		toolInfo.uId = (UINT_PTR)hButton;
-		toolInfo.lpszText = LPSTR_TEXTCALLBACK;
-		SendMessage(_hSelf, TTM_ADDTOOL, 0, (LPARAM)& toolInfo);
-		*/
 	}
 }
 
@@ -132,9 +105,6 @@ INT_PTR CALLBACK ExplorerDialog::run_dlgProc(UINT Message, WPARAM wParam, LPARAM
 						std::vector<string> classNames;
 						findClassRowsAndNames(linePositions, classNames);
 
-						//::MessageBox(NULL, TEXT("can be click NM_RCLICK1"), TEXT("Format Process Result"), MB_OK); //
-						//NMTREEVIEW* pNMTreeView = (NMTREEVIEW*)lParam;
-						//HTREEITEM hClickedItem = pNMTreeView->itemNew.hItem;
 						NMHDR* pNMHDR = (NMHDR*)lParam;
 						POINT pt;
 						GetCursorPos(&pt);
@@ -142,28 +112,7 @@ INT_PTR CALLBACK ExplorerDialog::run_dlgProc(UINT Message, WPARAM wParam, LPARAM
 						TVHITTESTINFO ht;
 						ht.pt = pt;
 						HTREEITEM hClickedItem = TreeView_HitTest(hTreeCtrl, &ht);
-						/*
-						int index = 0;
-						HTREEITEM hRootItem = TreeView_GetRoot(hTreeCtrl);
-						HTREEITEM hFirstChild = TreeView_GetChild(hTreeCtrl, hRootItem);
-						HTREEITEM hCurrentItem = hFirstChild;
 
-						if (hClickedItem == hRootItem) break;
-
-						while (hCurrentItem != NULL && index < linePositions.size()) {
-							if (hCurrentItem == hClickedItem) {
-								// find
-								break;
-							}
-							hCurrentItem = TreeView_GetNextSibling(hTreeCtrl, hCurrentItem);
-							index++;
-						}
-						if (index == linePositions.size())
-						{
-							index--;// break;
-						}
-						dumpToTargetLine(linePositions[index]);
-						*/
 						TVITEM tvItem;
 						tvItem.mask = TVIF_PARAM;
 						tvItem.hItem = hClickedItem;
@@ -172,40 +121,11 @@ INT_PTR CALLBACK ExplorerDialog::run_dlgProc(UINT Message, WPARAM wParam, LPARAM
 						{
 							LPARAM clickedLParam = tvItem.lParam;
 							dumpToTargetLine(clickedLParam);
-							/*
-							if (tvItem.lParam == NULL)
-							{
-								::MessageBox(NULL, TEXT("The corresponding class name was not found in this file"), TEXT("Find CLASS"), MB_OK);
-							}
-							else
-							{
-								dumpToTargetLine(clickedLParam);  // jump
-							}
-							*/
 						}
 						break;
 					}
 				}
 			}
-			/*
-			if (nmhdr->hwndFrom == hTreeCtrl && nmhdr->code == NM_RCLICK)
-			{
-				::MessageBox(NULL, TEXT("can be click NM_RCLICK1"), TEXT("Format Process Result"), MB_OK);
-				NMTREEVIEW* pNMTreeView = (NMTREEVIEW*)lParam;
-				HTREEITEM hClickedItem = pNMTreeView->itemNew.hItem;
-
-				TVITEM tvItem;
-				tvItem.hItem = hClickedItem;
-				tvItem.mask = TVIF_PARAM;
-				TreeView_GetItem(hTreeCtrl, &tvItem);
-				LPARAM clickedLParam = tvItem.lParam;
-				::MessageBox(NULL, TEXT("can be click NM_RCLICK2"), TEXT("Format Process Result"), MB_OK);
-				SendMessage(curScintilla, SCI_GOTOPOS, clickedLParam, 0);
-				::MessageBox(NULL, TEXT("can be click NM_RCLICK3"), TEXT("Format Process Result"), MB_OK);
-				return TRUE;
-			}
-			*/
-			//DockingDlgInterface::run_dlgProc(Message, wParam, lParam);
 		}
 		case WM_SIZE:
 		{

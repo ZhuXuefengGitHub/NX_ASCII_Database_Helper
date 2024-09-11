@@ -141,30 +141,42 @@ static void countTitle(const long long& line, const HWND& curSci, vector<int>& t
 	delete[] titleBuff;
 }
 
-static void countData(const long long& lineBegin, const long long& lineEnd, const HWND& curSci, vector<vector<int>>& dataCnt, vector<int>& lineMax)
-{
-	const long long MAXLINELEN = 500;
-	char* dataBuff = new char[MAXLINELEN];
-	for (auto i = lineBegin; i <= lineEnd; ++i) {
-		::memset(dataBuff, 0, MAXLINELEN);
-		int noneBlankLen = 0, cnt = 0;
-		vector<int> lineCnt;
-		::SendMessage(curSci, SCI_GETLINE, i - 1, (LPARAM)dataBuff);
-		long long lineLen = ::SendMessage(curSci, SCI_LINELENGTH, i - 1, 0);
-		for (auto j = 0; j < lineLen-2; ++j) {
-			if (dataBuff[j] == '|' || j == lineLen - 2) {
-				//if (j == lineLen - 2) ++noneBlankLen;
-				lineCnt.emplace_back(noneBlankLen);
-				lineMax[cnt] = lineMax[cnt] > noneBlankLen ? lineMax[cnt] : noneBlankLen;
-				noneBlankLen = 0;
-				++cnt;
-			}
-			else {
-				++noneBlankLen;
-			}
-		}
-		dataCnt.emplace_back(lineCnt);
-	}
+static void countData(const long long& lineBegin, const long long& lineEnd, const HWND& curSci, vector<vector<int>>& dataCnt, vector<int>& lineMax) {
+    char* dataBuff = nullptr;
+
+    for (auto i = lineBegin; i <= lineEnd; ++i) {
+        long long lineLen = ::SendMessage(curSci, SCI_LINELENGTH, i - 1, 0);
+
+        delete[] dataBuff;
+        dataBuff = new char[lineLen];
+        ::memset(dataBuff, 0, lineLen);
+
+        ::SendMessage(curSci, SCI_GETLINE, i - 1, (LPARAM)dataBuff);
+
+        int noneBlankLen = 0, cnt = 0;
+        vector<int> lineCnt;
+
+        for (auto j = 0; j < lineLen - 2; ++j) {
+            if (dataBuff[j] == '|' || j == lineLen - 2) {
+                lineCnt.emplace_back(noneBlankLen);
+                if (cnt >= lineMax.size()) {
+                    lineMax.push_back(noneBlankLen);
+                }
+                else {
+                    lineMax[cnt] = max(lineMax[cnt], noneBlankLen);
+                }
+                noneBlankLen = 0;
+                ++cnt;
+            }
+            else {
+                ++noneBlankLen;
+            }
+        }
+
+        dataCnt.emplace_back(lineCnt);
+    }
+
+    delete[] dataBuff;
 }
 
 static void fixTitle(const long long& line, HWND& curSci, const vector<int>& titleCnt, const vector<int>& lineMax, const long long& titleLen)
@@ -183,36 +195,33 @@ static void fixTitle(const long long& line, HWND& curSci, const vector<int>& tit
 	delete[] fillBuff;
 }
 
-static void fixData(const long long& lineBegin, const long long& lineEnd, HWND& curSci, const vector<vector<int>>& dataCnt, const vector<int>& lineMax)
-{
-	const long long MAXLINELEN = 500;
-	char* fillBuff = new char[MAXLINELEN];
-	::memset(fillBuff, ' ', MAXLINELEN);
-	long long cur = 0;
-	for (auto i = lineBegin; i <= lineEnd; ++i) {
-		cur = ::SendMessage(curSci, SCI_POSITIONFROMLINE, i - 1, 0) + 1;
-		for (auto j = 0; j < dataCnt[i - lineBegin].size(); ++j) {
-			int blankNum = lineMax[j] - dataCnt[i - lineBegin][j];
-			cur += dataCnt[i - lineBegin][j];
-			::SendMessage(curSci, SCI_SETCURRENTPOS, cur - 1, 0);
-			::SendMessage(curSci, SCI_ADDTEXT, blankNum, (LPARAM)fillBuff);
-			cur += blankNum;
-			++cur;
-		}
-	}
-	delete[] fillBuff;
+static void fixData(const long long& lineBegin, const long long& lineEnd, HWND& curSci, const vector<vector<int>>& dataCnt, const vector<int>& lineMax) {
+    char* fillBuff = nullptr;
+
+    for (auto i = lineBegin; i <= lineEnd; ++i) {
+        long long cur = ::SendMessage(curSci, SCI_POSITIONFROMLINE, i - 1, 0) + 1;
+
+        for (auto j = 0; j < dataCnt[i - lineBegin].size(); ++j) {
+            int blankNum = lineMax[j] - dataCnt[i - lineBegin][j];
+            cur += dataCnt[i - lineBegin][j];
+ 
+            delete[] fillBuff;
+            fillBuff = new char[blankNum];
+            ::memset(fillBuff, ' ', blankNum);
+
+            ::SendMessage(curSci, SCI_SETCURRENTPOS, cur - 1, 0);
+            ::SendMessage(curSci, SCI_ADDTEXT, blankNum, (LPARAM)fillBuff);
+
+            cur += blankNum;
+            ++cur;  // Skip the separator  
+        }
+    }
+
+    delete[] fillBuff;
 }
 
 int processFix()
 {
-	// Line Format:
-	// #CLASS CLASSNAME
-	// FORMAT LIBRF ...
-	// #---------------- / OR [NONE]
-	// DATA | ... / OR [NONE]
-	// #END DATA
-
-	// 取类的行号->查标题行各关键词长度+记录长度->遍历数据段+更新各字段最大长度->根据最大长度替换空格长度
 	int which = -1;
 	::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)& which);
 	if (which == -1) {
@@ -235,16 +244,11 @@ int processFix()
 	::SendMessage(curScintilla, SCI_SETSEARCHFLAGS, (WPARAM)SCFIND_MATCHCASE, 0);
 	::SendMessage(curScintilla, SCI_TARGETWHOLEDOCUMENT, 0, 0);
 
-	// 设置正则表达式搜索标志
 	::SendMessage(curScintilla, SCI_SETSEARCHFLAGS, SCFIND_REGEXP, 0);
 	const char* searchText = "# *(CLASS)";
 	classPos = ::SendMessage(curScintilla, SCI_SEARCHINTARGET, 6, (LPARAM)searchText) + 1;
 
-	//classPos = ::SendMessage(curScintilla, SCI_SEARCHINTARGET, 6, (LPARAM)"# *CLASS") + 1;
-
-	const long long MAXLINELEN = 400;
-	char* splitBuff = new char[MAXLINELEN];
-	::memset(splitBuff, 0, MAXLINELEN);
+    char* splitBuff = nullptr;
 
 	while (classPos != 0) {
 		lineClass = ::SendMessage(curScintilla, SCI_LINEFROMPOSITION, classPos, 0) + 1;
@@ -258,19 +262,31 @@ int processFix()
 		long long dataLineEnd = lineEnd - 1;
 		long long titleLineStart = lineClass + 1;
 
-		::SendMessage(curScintilla, SCI_GETLINE, titleLineStart, (LPARAM)splitBuff);
+        // Dynamically allocate buffer based on line length  
+        int lineLength = ::SendMessage(curScintilla, SCI_LINELENGTH, titleLineStart, 0);
+        delete[] splitBuff;  // Free previous buffer  
+        splitBuff = new char[lineLength];
+        ::memset(splitBuff, 0, lineLength);
+        ::SendMessage(curScintilla, SCI_GETLINE, titleLineStart, (LPARAM)splitBuff);
+
 		string sp = splitBuff;
 		sp = sp.substr(0, 3);
 		if (sp != "#--") {
 			dataLineStart = lineClass + 2;
 		}
 
-		// 处理FORMAT后面有多行#-------问题
+		// Dealing with the issue of multiple lines after FORMT (# --------)
 		int curLine = titleLineStart;
 		while (true)
 		{
 			curLine += 1;
-			::SendMessage(curScintilla, SCI_GETLINE, curLine, (LPARAM)splitBuff);
+
+            int lineLength = ::SendMessage(curScintilla, SCI_LINELENGTH, curLine, 0);
+            delete[] splitBuff;  // Free previous buffer 
+            splitBuff = new char[lineLength];
+            ::memset(splitBuff, 0, lineLength);
+            ::SendMessage(curScintilla, SCI_GETLINE, curLine, (LPARAM)splitBuff);
+
 			string sp = splitBuff;
 			sp = sp.substr(0, 3);
 			if (sp == "#--") {
@@ -285,35 +301,36 @@ int processFix()
 		countData(dataLineStart, dataLineEnd, curScintilla, dataCnt, lineMax);
 		fixTitle(titleLineStart, curScintilla, titleCnt, lineMax, titleLen);
 		fixData(dataLineStart, dataLineEnd, curScintilla, dataCnt, lineMax);
-		//if (lineEnd - lineClass > 3) {
-
-		//}
-
-		//string tmp = std::to_string(dataLineStart);
-		//::SendMessage(nppData._nppHandle, NPPM_MENUCOMMAND, 0, IDM_FILE_NEW);
-		//::SendMessage(curScintilla, SCI_SETTEXT, 0, (LPARAM)tmp.c_str());
 
 		::SendMessage(curScintilla, SCI_TARGETWHOLEDOCUMENT, 0, 0);
 		::SendMessage(curScintilla, SCI_SETTARGETSTART, endPos, 0);
 
 		// 设置正则表达式搜索标志
 		::SendMessage(curScintilla, SCI_SETSEARCHFLAGS, SCFIND_REGEXP, 0);
-		const char* searchText = "# *(CLASS)";
+		//const char* searchText = "# *(CLASS)";
 		classPos = ::SendMessage(curScintilla, SCI_SEARCHINTARGET, 6, (LPARAM)searchText) + 1;
-
-		//classPos = ::SendMessage(curScintilla, SCI_SEARCHINTARGET, 6, (LPARAM)"# *CLASS") + 1;
 
 		lineMax.clear();
 		titleCnt.clear();
 		dataCnt.clear();
 	}
 
-	return PROCESS_OK;
+    delete[] splitBuff;  // Free the allocated buffer at the end  
+
+    if (endPos != 0)
+    {
+        return PROCESS_OK;
+    }
+    else 
+    {
+        return PROCESS_NONE;
+    }
+
 }
 
 void dataFormatFix()
 {
-	int result = processFix();
+    int result = processFix();
 
 	switch (result) {
 	case(PROCESS_OK):
@@ -476,14 +493,5 @@ void dumpToTargetLine(LPARAM line)
 	{
 		::SendMessage(curScintilla, SCI_LINESCROLL, 0, linesToScroll);
 	}
-	/*
-	if (line < firstVisibleLine + linesToScroll && line - linesToScroll >= 0) {
-		::SendMessage(curScintilla, SCI_LINESCROLL, 0, -linesToScroll);
-	}
-	else if (line > firstVisibleLine + linesToScroll && line + linesToScroll <= totalLines)
-	{
-		::SendMessage(curScintilla, SCI_LINESCROLL, 0, linesToScroll);
-	}
-	*/
 	::SendMessage(curScintilla, SCI_ENSUREVISIBLE, line, 0);
 }
